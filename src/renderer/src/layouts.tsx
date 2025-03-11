@@ -143,7 +143,22 @@ export default function ResponsiveDrawer(props: Props): JSX.Element {
 
   const drawer = (
     <div>
-      <Toolbar variant="dense" />
+      <Toolbar variant="dense">
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: 23,
+              fontWeight: '700',
+              color: '#6A6D70',
+              fontStyle: 'normal',
+              letterSpacing: 2
+            }}
+          >
+            Church-MS
+          </Typography>
+        </Box>
+      </Toolbar>
       <Divider />
       <List disablePadding>
         <ListItem sx={{ display: 'flex', flexDirection: 'column', padding: 1 }}>
@@ -272,7 +287,7 @@ export default function ResponsiveDrawer(props: Props): JSX.Element {
           >
             <MenuIcon />
           </IconButton>
-          <Box sx={{ position: 'absolute', right: 10 }}>
+          <Box sx={{ position: 'absolute', right: 20 }}>
             <Typography
               variant="inherit"
               noWrap

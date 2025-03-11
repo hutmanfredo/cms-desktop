@@ -1,15 +1,33 @@
 import { Close } from '@mui/icons-material'
-import { Box, Button, Dialog, DialogContent, IconButton, Stack, Typography } from '@mui/material'
-import TextInput from '../TextInput'
-import { useState } from 'react'
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  IconButton,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
+
+type Value = {
+  id: number
+  label: string
+}
+
 
 type Props = {
   open: boolean
   handleClose: () => void
+  handleChange?: (event: any, newValue: Value | any) => void
+  data?: Value | any
+  onClick?: () => void
 }
 
-function IncomeOffering({ open, handleClose }: Props): JSX.Element {
-  const [value, setValue] = useState<string>('')
+
+function IncomeOffering({ open, handleClose, handleChange, data, onClick }: Props): JSX.Element {
+  const options: Value[] = data
   return (
     <Dialog
       open={open}
@@ -47,13 +65,41 @@ function IncomeOffering({ open, handleClose }: Props): JSX.Element {
       </Box>
       <DialogContent>
         <Stack spacing={2}>
-          <TextInput
-            label="Select Service/Event"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+          <Autocomplete
+            options={options}
+            size="small"
+            fullWidth={true}
+            freeSolo
+            disableClearable
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth={true}
+                placeholder="Search event/service"
+                sx={{
+                  '& .MuiInputBase-input': {
+                    fontSize: 12
+                  },
+                  color: '#878685'
+                }}
+              />
+            )}
+            onChange={handleChange}
+            slotProps={{
+              paper: {
+                sx: {
+                  '& .MuiAutocomplete-listbox': {
+                    fontSize: 12
+                  }
+                }
+              }
+            }}
           />
 
           <Button
+            onClick={onClick}
             variant="contained"
             size="small"
             disableElevation

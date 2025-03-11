@@ -7,11 +7,32 @@ import TopBarWithArrowBack from '@renderer/components/TopBarWithArrowBack'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
+type Value = {
+  id: number
+  label: string
+}
+
+const members: Value[] = [
+  { id: 1, label: 'Francis Quartey' },
+  { id: 2, label: 'Samuel Quartey' },
+  { id: 3, label: 'David Quartey' },
+  { id: 4, label: 'Isaac Quartey' },
+  { id: 5, label: 'Albert Quartey' }
+]
+
+const service: Value[] = [
+  { id: 1, label: 'Sunday service' },
+  { id: 2, label: 'Monday service' }
+]
+
 function NewIncome(): JSX.Element {
   const [incomeType, setIncomeType] = useState<string>('')
-  const [openIncomeType, setOpenIncomeType] = useState<boolean>(false)
-  const [openIncomeTypeOther, setOpenIncomeTypeOther] = useState<boolean>(false)
+  const [tsValue, setTSValue] = useState<Value | null>()
+  const [offeringValue, setOfferingValue] = useState<Value | null>()
+  const [openIncomeTypeOffering, setOpenIncomeTypeOffering] = useState<boolean>(false)
+  const [openIncomeTypeTS, setOpenIncomeTypeTS] = useState<boolean>(false)
   const navigate = useNavigate()
+
   const incometype = [
     {
       title: 'Offering',
@@ -26,6 +47,7 @@ function NewIncome(): JSX.Element {
       value: 'seed'
     }
   ]
+
   const paymenttype = [
     {
       title: 'Cash',
@@ -40,14 +62,30 @@ function NewIncome(): JSX.Element {
   useEffect(() => {
     setTimeout(() => {
       if (incomeType !== '' && incomeType === 'offering') {
-        setOpenIncomeType(true)
-        setOpenIncomeTypeOther(false)
+        setOpenIncomeTypeOffering(true)
+        setOpenIncomeTypeTS(false)
       } else if (incomeType !== '' && (incomeType === 'tithe' || incomeType === 'seed')) {
-        setOpenIncomeTypeOther(true)
-        setOpenIncomeType(false)
+        setOpenIncomeTypeTS(true)
+        setOpenIncomeTypeOffering(false)
       }
     }, 10)
   }, [incomeType])
+
+  const handleTSChange = (event: any, newValue: Value | any): void => {
+    setTSValue(newValue)
+  }
+
+  const handleTSClick = (): void => {
+    setOpenIncomeTypeTS(!openIncomeTypeTS)
+  }
+
+  const handleOfferingChange = (event: any, newValue: Value | any): void => {
+    setOfferingValue(newValue)
+  }
+
+  const handleOfferingClick = (): void => {
+    setOpenIncomeTypeOffering(!openIncomeTypeOffering)
+  }
 
   return (
     <>
@@ -108,7 +146,11 @@ function NewIncome(): JSX.Element {
                 <TextInput label="Amount" type="number" />
               </Grid>
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="Recieved from" readOnly={true} value={incomeType} />
+                <TextInput
+                  label="Recieved from"
+                  readOnly={true}
+                  value={incomeType === 'offering' ? offeringValue?.label : tsValue?.label}
+                />
               </Grid>
             </Grid>
             <Box
@@ -148,12 +190,18 @@ function NewIncome(): JSX.Element {
         </Box>
       </Box>
       <IncomeOffering
-        open={openIncomeType}
-        handleClose={() => setOpenIncomeType(!openIncomeType)}
+        open={openIncomeTypeOffering}
+        handleChange={handleOfferingChange}
+        data={service}
+        onClick={handleOfferingClick}
+        handleClose={() => setOpenIncomeTypeOffering(!openIncomeTypeOffering)}
       />
       <IncomeTitheSeed
-        open={openIncomeTypeOther}
-        handleClose={() => setOpenIncomeTypeOther(!openIncomeTypeOther)}
+        handleChange={handleTSChange}
+        data={members}
+        onClick={handleTSClick}
+        open={openIncomeTypeTS}
+        handleClose={() => setOpenIncomeTypeTS(!openIncomeTypeTS)}
       />
     </>
   )

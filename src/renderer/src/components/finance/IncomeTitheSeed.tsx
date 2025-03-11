@@ -1,16 +1,32 @@
-import { Add, Check, Close } from '@mui/icons-material'
-import { Box, Button, Dialog, DialogContent, IconButton, Stack, Typography } from '@mui/material'
-import TextInput from '../TextInput'
-import { useState } from 'react'
-import SearchInput from '../Search'
+import { Close } from '@mui/icons-material'
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  IconButton,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
+
+type Value = {
+  id: number
+  label: string
+}
 
 type Props = {
   open: boolean
   handleClose: () => void
+  handleChange?: (event: any, newValue: Value | any) => void
+  data?: Value | any
+  onClick?: () => void
 }
 
-function IncomeTitheSeed({ open, handleClose }: Props): JSX.Element {
-  const [search, setSearch] = useState<string>('')
+function IncomeTitheSeed({ open, handleClose, handleChange, data, onClick }: Props): JSX.Element {
+  const options: Value[] = data
+
   return (
     <Dialog
       open={open}
@@ -48,39 +64,59 @@ function IncomeTitheSeed({ open, handleClose }: Props): JSX.Element {
       </Box>
       <DialogContent>
         <Stack spacing={2}>
-          <SearchInput
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value)
+          <Autocomplete
+            options={options}
+            size="small"
+            fullWidth={true}
+            freeSolo
+            disableClearable
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                size="small"
+                fullWidth={true}
+                placeholder="Search member"
+                sx={{
+                  '& .MuiInputBase-input': {
+                    fontSize: 12
+                  },
+                  color: '#878685'
+                }}
+              />
+            )}
+            onChange={handleChange}
+            slotProps={{
+              paper: {
+                sx: {
+                  '& .MuiAutocomplete-listbox': {
+                    fontSize: 12
+                  }
+                }
+              }
             }}
-            placeholder={'Search for member'}
-            type="search"
-            width="100%"
           />
 
-          <Box sx={{ width: '100%', userSelect: 'none' }}>
-            <Stack spacing={1}>
-              <Typography variant="subtitle2" sx={{ fontSize: 12, fontWeight: '500' }}>
-                Search results
-              </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  padding: 1,
-                  border: '1px solid #ddd',
-                  borderRadius: 2
-                }}
-              >
-                <Typography variant="body1" sx={{ fontSize: 12, fontWeight: '500' }}>
-                  Francis Quartey
-                </Typography>
-                <Check fontSize="inherit" />
-              </Box>
-            </Stack>
-          </Box>
+          <Button
+            onClick={onClick}
+            variant="contained"
+            size="small"
+            disableElevation
+            disableRipple
+            disableTouchRipple
+            sx={{
+              fontSize: 12,
+              fontWeight: '500',
+              textTransform: 'none',
+              // backgroundColor: '#64c1ff',
+              color: '#fff',
+              '&:hover': {
+                color: '#ddd'
+              }
+            }}
+          >
+            Select
+          </Button>
         </Stack>
       </DialogContent>
     </Dialog>
