@@ -1,42 +1,28 @@
 import { Box, Button, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid2'
+import AutoComplete from '@renderer/components/Autocomplete'
 import TextInput from '@renderer/components/TextInput'
 import TopBarWithArrowBack from '@renderer/components/TopBarWithArrowBack'
-import React from 'react'
 import { useNavigate } from 'react-router'
+
+type Value = {
+  id: number
+  label: string
+}
+
+const members: Value[] = [
+  {
+    id: 12345,
+    label: 'Francis Quartey'
+  },
+  {
+    id: 1234,
+    label: 'David Quartey'
+  }
+]
 
 function NewZone(): JSX.Element {
   const navigate = useNavigate()
-  const gender = [
-    {
-      title: 'Male',
-      value: 'male'
-    },
-    {
-      title: 'Female',
-      value: 'female'
-    }
-  ]
-  const typedata = [
-    {
-      title: 'Student',
-      value: 'student'
-    },
-    {
-      title: 'Graduate',
-      value: 'graduate'
-    }
-  ]
-  const branchdata = [
-    {
-      title: 'Knust',
-      value: '123456'
-    },
-    {
-      title: 'Legon',
-      value: '12323454'
-    }
-  ]
 
   return (
     <>
@@ -67,15 +53,15 @@ function NewZone(): JSX.Element {
                 <TextInput label="Zone name" />
               </Grid>
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="Minister" select={true} data={gender} />
+                <AutoComplete label="Minister" data={members} />
               </Grid>
             </Grid>
             <Grid container spacing={2} size="grow">
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="Assistant minister" select={true} data={gender} />
+                <AutoComplete label="Assistant minister" data={members} />
               </Grid>
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="Phone" data={gender} type="tell" />
+                <TextInput label="Phone" type="tell" />
               </Grid>
             </Grid>
             <Grid container spacing={2} size="grow">

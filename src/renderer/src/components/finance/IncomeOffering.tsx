@@ -10,12 +10,12 @@ import {
   TextField,
   Typography
 } from '@mui/material'
+import AutoComplete from '../Autocomplete'
 
 type Value = {
   id: number
   label: string
 }
-
 
 type Props = {
   open: boolean
@@ -24,7 +24,6 @@ type Props = {
   data?: Value | any
   onClick?: () => void
 }
-
 
 function IncomeOffering({ open, handleClose, handleChange, data, onClick }: Props): JSX.Element {
   const options: Value[] = data
@@ -65,7 +64,13 @@ function IncomeOffering({ open, handleClose, handleChange, data, onClick }: Prop
       </Box>
       <DialogContent>
         <Stack spacing={2}>
-          <Autocomplete
+          <AutoComplete
+            label="Event/Service"
+            data={options}
+            placeholder="Search event/service"
+            handleChange={handleChange}
+          />
+          {/* <Autocomplete
             options={options}
             size="small"
             fullWidth={true}
@@ -96,7 +101,7 @@ function IncomeOffering({ open, handleClose, handleChange, data, onClick }: Prop
                 }
               }
             }}
-          />
+          /> */}
 
           <Button
             onClick={onClick}

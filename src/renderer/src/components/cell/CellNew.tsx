@@ -3,11 +3,38 @@ import { Box, Button, Dialog, DialogContent, IconButton, Stack, Typography } fro
 import TextInput from '../TextInput'
 import SearchInput from '../Search'
 import { useState } from 'react'
+import AutoComplete from '../Autocomplete'
 
 type Props = {
   open: boolean
   handleClose: () => void
 }
+
+type Value = {
+  id: number
+  label: string
+}
+
+const members: Value[] = [
+  {
+    id: 12345,
+    label: 'Francis Quartey'
+  },
+  {
+    id: 1234,
+    label: 'David Quartey'
+  }
+]
+const zone: Value[] = [
+  {
+    id: 12345,
+    label: 'Zone 1'
+  },
+  {
+    id: 1234,
+    label: 'Zone 2'
+  }
+]
 
 function CellNew({ open, handleClose }: Props): JSX.Element {
   const [search, setSearch] = useState<string>('')
@@ -48,8 +75,8 @@ function CellNew({ open, handleClose }: Props): JSX.Element {
       </Box>
       <DialogContent>
         <Stack spacing={1.5}>
-          <TextInput label="Select leader" select={true} placeholder=''/>
-          <TextInput label="Select zone" select={true} placeholder=''/>
+          <AutoComplete label="Leader" data={members} placeholder="Search leader"/>
+          <AutoComplete label="Zone" data={zone} placeholder="Search zone"/>
           <Button
             variant="contained"
             size="small"

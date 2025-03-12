@@ -1,16 +1,35 @@
-import { Add, Close } from '@mui/icons-material'
-import { Box, Dialog, DialogContent, IconButton, Stack, Typography } from '@mui/material'
-import TextInput from '../TextInput'
-import SearchInput from '../Search'
+import { Close } from '@mui/icons-material'
+import { Box, Button, Dialog, DialogContent, IconButton, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
+import AutoComplete from '../Autocomplete'
 
 type Props = {
   open: boolean
   handleClose: () => void
 }
 
+type Value = {
+  id: number
+  label: string
+}
+
+const members: Value[] = [
+  {
+    id: 12345,
+    label: 'Francis Quartey'
+  },
+  {
+    id: 1234,
+    label: 'David Quartey'
+  }
+]
+
 function CellNewMember({ open, handleClose }: Props): JSX.Element {
-  const [search, setSearch] = useState<string>('')
+  const [value, setValue] = useState<Value | null>()
+
+  const handleChange = (event: any, newValue: Value | any): void => {
+    setValue(newValue)
+  }
   return (
     <Dialog
       open={open}
@@ -48,39 +67,32 @@ function CellNewMember({ open, handleClose }: Props): JSX.Element {
       </Box>
       <DialogContent>
         <Stack spacing={2}>
-          <SearchInput
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value)
-            }}
-            placeholder={'Search for member'}
-            type="search"
-            width="100%"
+          <AutoComplete
+            label="Member"
+            data={members}
+            placeholder="Search member"
+            handleChange={handleChange}
           />
 
-          <Box sx={{ width: '100%', userSelect: 'none' }}> 
-            <Stack spacing={1}>
-              <Typography variant="subtitle2" sx={{ fontSize: 12, fontWeight: '500' }}>
-                Search results
-              </Typography>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: '100%',
-                  padding: 1,
-                  border: '1px solid #ddd',
-                  borderRadius: 2
-                }}
-              >
-                <Typography variant="body1" sx={{ fontSize: 12, fontWeight: '500' }}>
-                  Francis Quartey
-                </Typography>
-                <Add fontSize="inherit" />
-              </Box>
-            </Stack>
-          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            disableElevation
+            disableRipple
+            disableTouchRipple
+            sx={{
+              fontSize: 12,
+              fontWeight: '500',
+              textTransform: 'none',
+              // backgroundColor: '#64c1ff',
+              color: '#fff',
+              '&:hover': {
+                color: '#ddd'
+              }
+            }}
+          >
+            Add
+          </Button>
         </Stack>
       </DialogContent>
     </Dialog>

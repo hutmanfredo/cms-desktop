@@ -10,6 +10,7 @@ import {
   TextField,
   Typography
 } from '@mui/material'
+import AutoComplete from '../Autocomplete'
 
 type Value = {
   id: number
@@ -64,7 +65,13 @@ function IncomeTitheSeed({ open, handleClose, handleChange, data, onClick }: Pro
       </Box>
       <DialogContent>
         <Stack spacing={2}>
-          <Autocomplete
+          <AutoComplete
+            label="Member"
+            data={options}
+            placeholder="Search member"
+            handleChange={handleChange}
+          />
+          {/* <Autocomplete
             options={options}
             size="small"
             fullWidth={true}
@@ -95,7 +102,7 @@ function IncomeTitheSeed({ open, handleClose, handleChange, data, onClick }: Pro
                 }
               }
             }}
-          />
+          /> */}
 
           <Button
             onClick={onClick}

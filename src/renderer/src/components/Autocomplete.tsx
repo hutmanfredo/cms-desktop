@@ -10,19 +10,11 @@ type Props = {
   placeholder?: string
   disabled?: boolean
   readOnly?: boolean
-  select?: boolean
   data?: Value | any
   handleChange?: (e: any, newValue: Value | any) => void
 }
 
-const AutoComplete = ({
-  label,
-  value,
-  type,
-  placeholder,
-  data,
-  handleChange,
-}: Props): JSX.Element => {
+const AutoComplete = ({ label, placeholder, data, handleChange }: Props): JSX.Element => {
   const options: Value[] = data
   return (
     <Stack

@@ -1,41 +1,43 @@
 import { Box, Button, Stack } from '@mui/material'
 import Grid from '@mui/material/Grid2'
+import AutoComplete from '@renderer/components/Autocomplete'
 import TextInput from '@renderer/components/TextInput'
 import TopBarWithArrowBack from '@renderer/components/TopBarWithArrowBack'
+import { useState } from 'react'
 import { useNavigate } from 'react-router'
+
+type Value = {
+  id: number
+  label: string
+}
+
+const members: Value[] = [
+  {
+    id: 12345,
+    label: 'Francis Quartey'
+  },
+  {
+    id: 1234,
+    label: 'David Quartey'
+  }
+]
 
 function NewDepartment(): JSX.Element {
   const navigate = useNavigate()
-  const gender = [
-    {
-      title: 'Male',
-      value: 'male'
-    },
-    {
-      title: 'Female',
-      value: 'female'
-    }
-  ]
-  const typedata = [
-    {
-      title: 'Student',
-      value: 'student'
-    },
-    {
-      title: 'Graduate',
-      value: 'graduate'
-    }
-  ]
-  const branchdata = [
-    {
-      title: 'Knust',
-      value: '123456'
-    },
-    {
-      title: 'Legon',
-      value: '12323454'
-    }
-  ]
+  const [valueHead, setValueHead] = useState<Value | null>()
+  const [valuePresident, setValuePresident] = useState<Value | null>()
+  const [valueAssistant, setValueAssistant] = useState<Value | null>()
+
+  const handleChangeHead = (event: any, newValue: Value | any): void => {
+    setValueHead(newValue)
+  }
+  const handleChangePresident = (event: any, newValue: Value | any): void => {
+    setValuePresident(newValue)
+  }
+  const handleChangeAssistant = (event: any, newValue: Value | any): void => {
+    setValueAssistant(newValue)
+  }
+
   return (
     <>
       <TopBarWithArrowBack onClick={() => navigate(-1)} title="New Department" />
@@ -65,15 +67,23 @@ function NewDepartment(): JSX.Element {
                 <TextInput label="Department name" />
               </Grid>
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="Head" select={true} data={gender} />
+                <AutoComplete label="Head" data={members} handleChange={handleChangeHead} />
               </Grid>
             </Grid>
             <Grid container spacing={2} size="grow">
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="President" select={true} data={gender} />
+                <AutoComplete
+                  label="President"
+                  data={members}
+                  handleChange={handleChangePresident}
+                />
               </Grid>
               <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-                <TextInput label="Assistant" select={true} data={gender} />
+                <AutoComplete
+                  label="Assistant"
+                  data={members}
+                  handleChange={handleChangeAssistant}
+                />
               </Grid>
             </Grid>
             <Box

@@ -32,6 +32,7 @@ const columns: Column[] = [
   { id: 4, label: 'Program', minWidth: 20, align: 'center' },
   { id: 4, label: 'Phone', minWidth: 20, align: 'center' },
   { id: 6, label: 'Invitor', minWidth: 20, align: 'center' },
+  { id: 6, label: 'Event/Service', minWidth: 20, align: 'center' },
   { id: 6, label: 'Date', minWidth: 20, align: 'center' },
   { id: 12, label: 'Options', minWidth: 20, align: 'right' }
 ]
@@ -45,6 +46,7 @@ interface Data {
   phone?: string
   invitor?: string
   date?: string
+  event?: string
 }
 
 const data: Data[] = [
@@ -56,7 +58,8 @@ const data: Data[] = [
     program: '',
     phone: '0542450230',
     invitor: 'Francis',
-    date: '30/12/2024'
+    date: '30/12/2024',
+    event: 'Spiritual Protocol'
   }
 ]
 
@@ -147,6 +150,9 @@ function Visitors(): JSX.Element {
                       </TableCell>
                       <TableCell sx={{ fontSize: 12 }} align="center">
                         {row.invitor}
+                      </TableCell>
+                      <TableCell sx={{ fontSize: 12 }} align="center">
+                        {row.event}
                       </TableCell>
                       <TableCell sx={{ fontSize: 12 }} align="center">
                         {row.date}
